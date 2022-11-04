@@ -8,7 +8,7 @@ class PostFilter(FilterSet):
         field_name='category',
         queryset=Category.objects.all(),
         label='Категория',
-        empty_label='любая категория'
+        empty_label='пустая категория'
     )
     posting_time = DateFilter(
         lookup_expr='gte',
