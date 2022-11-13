@@ -25,6 +25,11 @@ NewsPaper
                <td align="left">{{ post.text|truncatechars:20|censor }}</td>
                <td>{{ post.posting_time|date:'d.m.Y' }}</td>
            </tr>
+           <small class = "fw-bold">Категории:
+               {% for category in post.category.all %}
+                        <a href="{% url 'category_list' category.id %}">{{ category }}</a>
+               {% endfor %}
+           </small>
            {% endfor %}
 
        </table>
