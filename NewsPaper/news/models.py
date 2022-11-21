@@ -87,6 +87,10 @@ class PostCategory(models.Model):
     post = models.ForeignKey(Post, null= True, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, null= True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.category.category_name} : {self.post.id}'
+
+
 class Comment(models.Model):
     comment_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_user = models.ForeignKey(User, on_delete=models.CASCADE)

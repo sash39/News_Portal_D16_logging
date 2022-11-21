@@ -117,7 +117,6 @@ LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'NewsPaper.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -152,13 +151,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -171,3 +166,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+CELERY_BROKER_URL = 'redis://:qd3TBS4smqn5uW82hsIeS9UXtoJxROqk@redis-18531.c241.us-east-1-4.ec2.cloud.redislabs.com/0'
+CELERY_RESULT_BACKEND = 'redis://:qd3TBS4smqn5uW82hsIeS9UXtoJxROqk@redis-18531.c241.us-east-1-4.ec2.cloud.redislabs.com:18531/0'
+#CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
