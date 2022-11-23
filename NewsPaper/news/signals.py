@@ -1,9 +1,8 @@
 from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
-from news.models import PostCategory
+from .models import PostCategory
 from django.template.loader import render_to_string
 from django.conf import settings
-from allauth.account.signals import user_signed_up
 from django.core.mail import EmailMultiAlternatives
 
 
@@ -37,5 +36,3 @@ def notify_about_new_post(sender, instance, **kwargs):
         subscribers = [s.email for s in subscribers]
 
         send_notifications(instance.preview(), instance.pk, instance.title, subscribers)
-
-#@receiver(user_signed_up)

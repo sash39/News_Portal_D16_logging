@@ -12,7 +12,7 @@ from news.filters import PostFilter
 from django.views.generic.edit import CreateView
 from django.http import HttpResponse
 from django.views import View
-from .tasks import hello, printer
+from .tasks import hello
 
 
 class IndexView(View):
