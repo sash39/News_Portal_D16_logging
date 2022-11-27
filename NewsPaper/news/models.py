@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MinValueValidator
-
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -55,8 +55,8 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     text = models.TextField()
     choice = models.CharField(max_length=10, choices=CHOICES, default=articles)
-    posting_time = models.DateTimeField(null= True)
-    category = models.ManyToManyField(Category, through = 'PostCategory')
+    posting_time = models.DateTimeField(null=True)
+    category = models.ManyToManyField(Category, through='PostCategory')
     post_rating = models.IntegerField(default=0)
 
     @property
@@ -80,8 +80,12 @@ class Post(models.Model):
         return f'{self.text[:124]}...'
 
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        #return reverse('post_detail', args=[str(self.id)])
+        return f'/posts/{self.id}'
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'post-{self.pk}')
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, null= True, on_delete=models.CASCADE)

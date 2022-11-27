@@ -13,6 +13,7 @@ from django.views.generic.edit import CreateView
 from django.http import HttpResponse
 from django.views import View
 from .tasks import hello
+from django.core.cache import cache
 
 
 class IndexView(View):
@@ -29,6 +30,13 @@ class PostsList(ListView):
     context_object_name = 'posts'
     paginate_by = 3
 
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+        return obj
 
     def get_context_date(self, **kwargs):
         context = super().get_context_data(**kwargs)

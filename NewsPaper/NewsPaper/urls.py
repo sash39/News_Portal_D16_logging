@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
+from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [
