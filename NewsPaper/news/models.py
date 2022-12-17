@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.urls import reverse
-from django.core.validators import MinValueValidator
+from datetime import datetime
 from django.core.cache import cache
 
 
@@ -36,7 +37,7 @@ class Author(models.Model):
         return self.user.username
 
 class Category(models.Model):
-    category_name = models.CharField(max_length= 100, unique=True)
+    category_name = models.CharField(max_length=100, unique=True)
     subscribers = models.ManyToManyField(User, related_name='categories')
 
     def __str__(self):
@@ -80,7 +81,6 @@ class Post(models.Model):
         return f'{self.text[:124]}...'
 
     def get_absolute_url(self):
-        #return reverse('post_detail', args=[str(self.id)])
         return f'/posts/{self.id}'
 
     def save(self, *args, **kwargs):
@@ -88,8 +88,8 @@ class Post(models.Model):
         cache.delete(f'post-{self.pk}')
 
 class PostCategory(models.Model):
-    post = models.ForeignKey(Post, null= True, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, null= True, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.category.category_name} : {self.post.id}'
@@ -99,7 +99,7 @@ class Comment(models.Model):
     comment_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_text = models.TextField(null=False)
-    comment_date = models.DateTimeField(null = True)
+    comment_date = models.DateTimeField(null=True)
     comment_rating = models.IntegerField(default=0)
 
     @property
@@ -118,3 +118,15 @@ class Comment(models.Model):
     def dislike(self):
         self.comment_rating -= 1
         self.save()
+
+class Appointment(models.Model):
+    date = models.DateField(
+        default=datetime.utcnow,
+    )
+    client_name = models.CharField(
+        max_length=200
+    )
+    message = models.TextField()
+
+    def __str__(self):
+        return f'{self.client_name}: {self.message}'

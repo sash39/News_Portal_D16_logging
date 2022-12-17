@@ -8,7 +8,6 @@
         <meta name="author" content="" />
         <title>Bare - Start Bootstrap Template</title>
 
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         {% load static %}
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
@@ -29,10 +28,24 @@
        </button>
        <div class="collapse navbar-collapse" id="navbarResponsive">
            <ul class="navbar-nav ml-auto">
-               <li class="nav-item active">
-
+               <li class="nav-item">
+                   <a class="nav-link" href="/news/">Новости</a>
                </li>
-
+               <li class="nav-item">
+                   <a class="nav-link" href="/news/search">Поиск</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="/news/login">Profile</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="/news/create">CREATE</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="/news/mail">MAIL</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="/accounts/logout">Exit</a>
+               </li>
            </ul>
        </div>
    </div>
@@ -42,6 +55,7 @@
    <div class="row">
        <div class="col-lg-12 text-center">
            {% block content %}
+           {{ flatpage.content }}
            {% endblock content %}
        </div>
    </div>

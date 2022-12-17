@@ -7,13 +7,15 @@ from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from .models import Post, Author
 from .filters import PostFilter
 from .forms import PostForm
-from news.models import Post, Category
-from news.filters import PostFilter
+from news.models import Post, Category, Author
 from django.views.generic.edit import CreateView
 from django.http import HttpResponse
-from django.views import View
 from .tasks import hello
 from django.core.cache import cache
+from django.views import View
+from django.core.mail import send_mail
+from .models import Appointment
+
 
 
 class IndexView(View):
@@ -114,8 +116,8 @@ class CategoryListView(ListView):
     context_object_name = 'category_news_list'
 
     def get_queryset(self):
-        self.category = get_object_or_404(Category, id = self.kwargs['pk'])
-        queryset = Post.objects.filter(category = self.category).order_by('-posting_time')
+        self.category = get_object_or_404(Category, id=self.kwargs['pk'])
+        queryset = Post.objects.filter(category=self.category).order_by('-posting_time')
         return queryset
 
     def get_context_data(self, **kwargs):

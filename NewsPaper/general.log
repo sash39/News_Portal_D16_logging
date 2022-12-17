@@ -1,0 +1,4 @@
+17/Dec/2022 10:45:25 INFO autoreload Watching for file changes with StatReloader
+17/Dec/2022 10:45:29 WARNING log Not Found: /sign/login
+17/Dec/2022 10:45:29 WARNING basehttp "GET /sign/login HTTP/1.1" 404 179
+17/Dec/2022 10:45:42 INFO autoreload D:\Python\Projects\NewsPaper\NewsPaper\settings.py changed, reloading.
